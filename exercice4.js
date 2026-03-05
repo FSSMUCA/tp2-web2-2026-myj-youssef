@@ -1,43 +1,39 @@
-let zero = 0;
-let one = 1;
-let NaN_value = Number("hello");
-let nullValue = null;
-let chaineVide = "";
-let chaineZero = "0";
-let chaineOne = "1";
-let falseValue = false;
-let undefinedValue;
-let value = " \t\n ";
+let tablePaires = [
+  [0, ""],
+  [0, "0"],
+  [0, false],
+  ["", false],
+  [null, undefined],
+  [null, false],
+  [NaN, NaN],
+  [1, "1"],
+  [" \t\n ", 0]
+];
 
-let firstTable = [zero, zero, zero, chaineVide, nullValue, nullValue, NaN_value, one, value];
-let secondTable = [chaineVide, chaineZero, falseValue, falseValue, undefinedValue, falseValue, NaN_value, chaineOne, zero];
+let resTwoEqual, resThreeZEqual;
+let i, nbrdifferent=0;
+let first, second;
 
-let resTwoEqual;
-let resThreeZEqual;
+for (i = 0; i < tablePaires.length; i++) {
+  first=tablePaires[i][0];
+  second=tablePaires[i][1];
 
-let i, j;
+  resTwoEqual = (first == second);
+  resThreeZEqual = (first === second);
 
-for(i=0, j=0; i<firstTable.length && j<secondTable.length; i++, j++) {
-    if (firstTable[i] == secondTable[j]) {
-        resTwoEqual=true;
-    }
-    else {
-        resTwoEqual=false
-    }
-    if (firstTable[i] === secondTable[j]) {
-        resThreeZEqual=true;
-    }
-    else {
-        resThreeZEqual=false;
-    }
+  nbrdifferent = (resTwoEqual==true && resThreeZEqual==false) ? nbrdifferent + 1 : nbrdifferent;
 
-    if (typeof(firstTable[i])==="string") {
-        console.log("\"", firstTable[i], "\"", " == ", secondTable[j],"         -> ", resTwoEqual,"    |   \"", firstTable[i], " \" === ", secondTable[j], "         -> ", resThreeZEqual);
-    }
-    else if (secondTable[j]==="string") {
-        console.log(`${firstTable[i]} == \" ${secondTable[j]} \"         -> ${resTwoEqual}    |   ${firstTable[i]} === \" ${secondTable[j]} \"         -> ${resThreeZEqual}`);
-    }
-    else {
-        console.log(`${firstTable[i]} == ${secondTable[j]}         -> ${resTwoEqual}    |   ${firstTable[i]} === ${secondTable[j]}         -> ${resThreeZEqual}`);
-    }
+  if (typeof first === "string") {
+    first = '"' + first + '"';
+  }
+  if (typeof second === "string") {
+    second = '"' + second + '"';
+  }
+  if (first === "\" \t\n \"") first = "\" \\t\\n \""; //Pour l affichage des caractères spéciaux: " \t\n "
+
+  console.log(
+    `${first} == ${second}         -> ${resTwoEqual}    |   ${first} === ${second}         -> ${resThreeZEqual}`
+  );
 }
+
+console.log(nbrdifferent + " paire(s) " + "où == et === donnent des résultats différents");
