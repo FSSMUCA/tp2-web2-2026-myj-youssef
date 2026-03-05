@@ -7,33 +7,45 @@ let tablePaires = [
   [null, false],
   [NaN, NaN],
   [1, "1"],
-  [" \t\n ", 0]
+  [" \t\n ", 0],
 ];
 
 let resTwoEqual, resThreeZEqual;
-let i, nbrdifferent=0;
+let i,
+  nbrdifferent = 0;
 let first, second;
 
 for (i = 0; i < tablePaires.length; i++) {
-  first=tablePaires[i][0];
-  second=tablePaires[i][1];
+  first = tablePaires[i][0];
+  second = tablePaires[i][1];
 
-  resTwoEqual = (first == second);
-  resThreeZEqual = (first === second);
+  resTwoEqual = first == second;
+  resThreeZEqual = first === second;
 
-  nbrdifferent = (resTwoEqual==true && resThreeZEqual==false) ? nbrdifferent + 1 : nbrdifferent;
-
-  if (typeof first === "string") {
-    first = '"' + first + '"';
+  nbrdifferent =
+    resTwoEqual == true && resThreeZEqual == false
+      ? nbrdifferent + 1
+      : nbrdifferent;
+  if (first === undefined || second === undefined) {
+    first = String(first);
+    second = String(second);
   }
-  if (typeof second === "string") {
-    second = '"' + second + '"';
-  }
-  if (first === "\" \t\n \"") first = "\" \\t\\n \""; //Pour l affichage des caractères spéciaux: " \t\n "
-
   console.log(
-    `${first} == ${second}         -> ${resTwoEqual}    |   ${first} === ${second}         -> ${resThreeZEqual}`
+    JSON.stringify(first) +
+      " == " +
+      JSON.stringify(second).padEnd(20, " ") +
+      "-> " +
+      resTwoEqual +
+      "".padEnd(4) +
+      "|    " +
+      JSON.stringify(first) +
+      " === " +
+      JSON.stringify(second).padEnd(20, " ") +
+      "-> " +
+      resThreeZEqual,
   );
 }
 
-console.log(nbrdifferent + " paire(s) " + "où == et === donnent des résultats différents");
+console.log(
+  nbrdifferent + " paire(s) " + "où == et === donnent des résultats différents",
+);
