@@ -26,26 +26,36 @@ for (i = 0; i < tablePaires.length; i++) {
     resTwoEqual == true && resThreeZEqual == false
       ? nbrdifferent + 1
       : nbrdifferent;
-  if (first === undefined || second === undefined) {
+
+  if (typeof first === "string") {
+    first = JSON.stringify(String(first));
+  }
+  else {
     first = String(first);
+  }
+  if (typeof second === "string") {
+    second = JSON.stringify(String(second));
+  }
+  else {
     second = String(second);
   }
+
   console.log(
-    JSON.stringify(first) +
+    first +
       " == " +
-      JSON.stringify(second).padEnd(20, " ") +
+      second.padEnd(20, " ") +
       "-> " +
       resTwoEqual +
       "".padEnd(4) +
       "|    " +
-      JSON.stringify(first) +
+      first +
       " === " +
-      JSON.stringify(second).padEnd(20, " ") +
+      second.padEnd(20, " ") +
       "-> " +
       resThreeZEqual,
   );
 }
 
 console.log(
-  nbrdifferent + " paire(s) " + "où == et === donnent des résultats différents",
+  nbrdifferent + " paire(s) " + "où == et === donnent des résultats différents"
 );
